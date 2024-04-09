@@ -1,0 +1,13 @@
+[
+    "https://dati.anticorruzione.it/opendata/download/dataset/aggiudicatari/filesystem/aggiudicatari_csv.zip",
+    "https://dati.anticorruzione.it/opendata/download/dataset/aggiudicazioni/filesystem/aggiudicazioni_csv.zip",
+    "https://dati.anticorruzione.it/opendata/download/dataset/avvio-contratto/filesystem/avvio-contratto_csv.zip",
+    "https://dati.anticorruzione.it/opendata/download/dataset/collaudo/filesystem/collaudo_csv.zip",
+    "https://dati.anticorruzione.it/opendata/download/dataset/fine-contratto/filesystem/fine-contratto_csv.zip",
+    "https://dati.anticorruzione.it/opendata/download/dataset/pubblicazioni/filesystem/pubblicazioni_csv.zip",
+    "https://dati.anticorruzione.it/opendata/download/dataset/sospensioni/filesystem/sospensioni_csv.zip",
+    "https://dati.anticorruzione.it/opendata/download/dataset/stati-avanzamento/filesystem/stati-avanzamento_csv.zip",
+    "https://dati.anticorruzione.it/opendata/download/dataset/stazioni-appaltanti/filesystem/stazioni-appaltanti_csv.zip",
+    "https://dati.anticorruzione.it/opendata/download/dataset/subappalti/filesystem/subappalti_csv.zip",
+    "https://dati.anticorruzione.it/opendata/download/dataset/varianti/filesystem/varianti_csv.zip"
+]

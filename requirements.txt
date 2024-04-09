@@ -1,0 +1,4 @@
+pandas==2.2.1
+PyYAML==6.0.1
+Requests==2.31.0
+urllib3==2.2.1

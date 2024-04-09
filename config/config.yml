@@ -1,0 +1,42 @@
+# config.yml
+
+# For downloading purposes
+DOWNLOAD_DIR: download
+DOWNLOAD_URL: https://dati.anticorruzione.it/opendata/download/dataset/cig- # tenders dynamic URL
+YEAR_START_DOWNLOAD: 2016    # starting year for downloading ANAC Open Data
+YEAR_END_DOWNLOAD: 2022      # ending year for downloading ANAC Open Data
+ANAC_URLS_JSON: anac_static_urls.json # file with ANAC static URLs
+
+# PA registry
+PA_REG_DIR: pa_registry
+PA_REG_FILE: Anagrafe-Enti_BDAP_2023-05-19.xlsx
+PA_REG_SCHEMA:
+  CF: object
+  Codice_Tipologia_MIUR: object
+  Codice_Tipologia_SIOPE: object
+  Denominazione: object
+  Descr_Tipologia_MIUR: object
+  Descr_Tipologia_SIOPE: object
+
+# For filtering purposes
+DATA_DIR: data
+ANAC_OD_FILE: bando_cig_2007-2023.csv # Merged CSV file (starting point)
+YEAR_START_FILTER: 2016    # starting year for filtering ANAC Open Data
+YEAR_END_FILTER: 2022      # ending year for filtering ANAC Open Data
+CSV_SEP: ;
+ANAC_OD_SCHEMA: # Desired columns
+  cig: object
+  cf_amministrazione_appaltante: object
+  oggetto_lotto: object
+  settore: object
+  oggetto_principale_contratto: object
+  cod_cpv: object
+  sezione_regionale: object
+  anno_pubblicazione: int
+  cod_tipo_scelta_contraente: int
+ANAC_FILE_FILTERED: bando_cig_YS-YE_R.csv # YS = year start, YE = year end, R = Region
+ANAC_REGIONS_JSON: anac_regions.json
+
+# STATS
+ANAC_STATS_DIR: stats
+ANAC_STATS_FILE: anac_stats_region.csv
