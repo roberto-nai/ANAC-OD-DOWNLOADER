@@ -29,7 +29,7 @@ Application to download public notices (tenders) from the ANAC website and creat
 ### ```02_anac_od_select.py```
 Application to select ANAC Open Data of interest from the global dataset.
 
-### ``anac_urls.json```
+### ```anac_urls.json```
 List of static URLs (files) to download.
 
 ### ``ssl_adapter.py``
