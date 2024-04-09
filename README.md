@@ -12,7 +12,7 @@ Configuration directory with ```config.yml```
 Directory with filtered data starting from the one downloaded.
 
 ### download
-Directory with download files from ANAC (zip and csv); source [https://dati.anticorruzione.it/opendata](https://dati.anticorruzione.it/opendata)
+Directory with download files from ANAC (zip and csv). 
 
 ### pa_registry
 Directory with PA registry (for PA type); source: [https://openbdap.rgs.mef.gov.it](https://openbdap.rgs.mef.gov.it)
@@ -29,8 +29,8 @@ Application to download public notices (tenders) from the ANAC website and creat
 ### ```02_anac_od_select.py```
 Application to select ANAC Open Data of interest from the global dataset.
 
-### ```anac_urls.json```
-List of static URLs (files) to download.
+### ```anac_static_urls.json```
+List of static URLs (files) to download; source [https://dati.anticorruzione.it/opendata](https://dati.anticorruzione.it/opendata)
 
 ### ``ssl_adapter.py``
 Class to execute requests via HTTPS.
