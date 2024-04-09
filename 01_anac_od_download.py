@@ -20,10 +20,10 @@ import json
 ### LOCAL IMPORT ###
 from config import config_reader
 from ssl_adapter import SSLAdapter
+from utility_manager.utilities import json_to_list_dict, check_and_create_directory
 
 ### GLOBALS ###
 yaml_config = config_reader.config_read_yaml("config.yml", "config")
-download_dir = str(yaml_config["DOWNLOAD_DIR"])
 list_months = [f"{i:02}" for i in range(1, 13)]
 url_base = str(yaml_config["DOWNLOAD_URL"])
 year_start = int(yaml_config["YEAR_START_DOWNLOAD"])
@@ -33,6 +33,8 @@ url_statics_file = str(yaml_config["ANAC_URLS_JSON"])
 
 # OUTPUT
 merge_file = f"bando_cig_{year_start}-{year_end}.csv" # final file with all the tenders following years
+download_dir = str(yaml_config["DOWNLOAD_DIR"])
+data_dir = str(yaml_config["DATA_DIR"])
 
 ### FUNCTIONS ###
 
@@ -206,6 +208,11 @@ def main() -> None:
 
     start_time = datetime.now().replace(microsecond=0)
     print("Start process: " + str(start_time))
+    print()
+
+    print(">> Generating output directories")
+    check_and_create_directory(download_dir)
+    check_and_create_directory(data_dir)
     print()
     
     print(">> Generating dinamic URLs")
