@@ -12,7 +12,7 @@ Configuration directory with ```config.yml```
 Directory with filtered data starting from the one downloaded.
 
 ### download
-Directory with download files from ANAC (zip and csv).
+Directory with download files from ANAC (zip and csv); source [https://dati.anticorruzione.it/opendata](https://dati.anticorruzione.it/opendata)
 
 ### pa_registry
 Directory with PA registry (for PA type); source: [https://openbdap.rgs.mef.gov.it](https://openbdap.rgs.mef.gov.it)

@@ -210,6 +210,10 @@ def main():
     print()
     print()
 
+    print(">> Generating output directories")
+    check_and_create_directory(data_dir)
+    print()
+
     print(">> Reading ANAC regions JSON")
     print()
     print("File:", anac_regions_json)

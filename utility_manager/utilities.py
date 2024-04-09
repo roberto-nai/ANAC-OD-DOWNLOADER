@@ -43,5 +43,4 @@ def check_and_create_directory(dir_name:str, dir_parent:str="") -> None:
     else:
         path_directory.mkdir(parents=True, exist_ok=True)
         print("The directory '{}' has been created successfully: {}".format(dir_name, path_directory))
-        
     print()
