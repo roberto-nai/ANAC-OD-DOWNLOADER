@@ -1,6 +1,8 @@
 # ANAC Open Data downloader and filter by region and year
 
-### config
+### Directories
+
+#### config
 Configuration directory with ```config.yml```
 - [ ] Define the starting/ending years to download ```YEAR_START_DOWNLOAD``` and ```YEAR_END_DOWNLOAD```
 - [ ] Define the starting dataset to filter in ```ANAC_OD_FILE```
@@ -8,32 +10,34 @@ Configuration directory with ```config.yml```
 - [ ] Define the region to filter in ```ANAC_OD_REGION``` following ANAC region names
 - [ ] Define the region output name ```ANAC_OD_REGION_OUT``` (convenience name for next use)
 
-### data
+#### data
 Directory with filtered data starting from the one downloaded.
 
-### download
+#### download
 Directory with download files from ANAC (zip and csv). 
 
-### pa_registry
+#### pa_registry
 Directory with PA registry (for PA type); source: [https://openbdap.rgs.mef.gov.it](https://openbdap.rgs.mef.gov.it)
 
-### stats
+#### stats
 Directory with procurements stats.
 
-### utility_manager
+#### utility_manager
 Directory with utilities functions.
 
-### ```01_anac_od_download.py```
+### Files
+
+#### ```01_anac_od_download.py```
 Application to download public notices (tenders) from the ANAC website and create a global dataset.
 
-### ```02_anac_od_select.py```
+#### ```02_anac_od_select.py```
 Application to select ANAC Open Data of interest from the global dataset.
 
-### ```anac_regions.json```
+#### ```anac_regions.json```
 List of regions according to ANAC nomenclature and filtering convenience name.
 
-### ```anac_static_urls.json```
+#### ```anac_static_urls.json```
 List of static URLs (files) to download; source [https://dati.anticorruzione.it/opendata](https://dati.anticorruzione.it/opendata)
 
-### ``ssl_adapter.py``
+#### ``ssl_adapter.py``
 Class to execute requests via HTTPS.
