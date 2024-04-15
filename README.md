@@ -1,5 +1,7 @@
 # ANAC Open Data downloader and filter by region and year
 
+![PyPI - Python Version](https://img.shields.io/badge/python-3.12-3776AB?logo=python)
+
 ### > Directories
 
 #### config
