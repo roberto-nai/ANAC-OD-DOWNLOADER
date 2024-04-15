@@ -1,6 +1,6 @@
 # ANAC Open Data downloader and filter by region and year
 
-### Directories
+### > Directories
 
 #### config
 Configuration directory with ```config.yml```
@@ -25,7 +25,7 @@ Directory with procurements stats.
 #### utility_manager
 Directory with utilities functions.
 
-### Files
+### > Files
 
 #### ```01_anac_od_download.py```
 Application to download public notices (tenders) from the ANAC website and create a global dataset.
