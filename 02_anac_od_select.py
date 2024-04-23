@@ -38,13 +38,13 @@ def read_anac_data(path: str, col_list: list[str], col_type: dict[str, str], csv
     Reads data from a CSV file into a pandas DataFrame with specified columns and data types.
 
     Parameters:
-    - path (str): the file path to the CSV file to be read.
-    - columns (list[str]): a list of column names to be read from the CSV file.
-    - dtype (dict[str, str]): a dictionary mapping column names to their respective data types.
-    - sep (str, optional): the delimiter string used in the CSV file. Defaults to ','.
+        path (str): the file path to the CSV file to be read.
+        columns (list[str]): a list of column names to be read from the CSV file.
+        dtype (dict[str, str]): a dictionary mapping column names to their respective data types.
+        sep (str, optional): the delimiter string used in the CSV file. Defaults to ','.
 
     Returns:
-    - pd.DataFrame: a pandas DataFrame containing the data read from the CSV file.
+        pd.DataFrame: a pandas DataFrame containing the data read from the CSV file.
     """
 
     df = pd.read_csv(path, usecols=col_list, dtype=col_type, sep=csv_sep)
@@ -57,12 +57,12 @@ def read_pa_data(path: str, col_list: list[str], col_type: dict[str, str]):
     Reads an XLSX file and converts specific columns to 'object' type.
 
     Parameters:    
-    - path (str): the file path to the XLSX file to be read.
-    - col_list (list[str]): a list of column names to be read from the CSV file.
-    - col_type (dict[str, str]): a dictionary mapping column names to their respective data types.    
+        path (str): the file path to the XLSX file to be read.
+        col_list (list[str]): a list of column names to be read from the CSV file.
+        col_type (dict[str, str]): a dictionary mapping column names to their respective data types.    
 
     Returns:
-    pandas.DataFrame: The DataFrame with specified columns converted to 'object' type.
+        pandas.DataFrame: The DataFrame with specified columns converted to 'object' type.
     """
 
     df = pd.read_excel(path, usecols=col_list, dtype=col_type)
@@ -78,11 +78,11 @@ def print_details(df: pd.DataFrame, title: str) -> None:
     along with any available information on publication years and regions if present in the DataFrame.
 
     Parameters:
-    - df (pd.DataFrame): the DataFrame whose details are to be printed.
-    - title (str): a title for the printed output to describe the context of the DataFrame.
+        df (pd.DataFrame): the DataFrame whose details are to be printed.
+        title (str): a title for the printed output to describe the context of the DataFrame.
 
     Returns:
-    - None
+        None
     """
 
     print(f">> {title}")
@@ -107,12 +107,12 @@ def filter_data(df: pd.DataFrame, year_list: list[int], region: str) -> pd.DataF
     some specific cleaning tasks on the 'sezione_regionale', 'settore', and 'cod_cpv' columns.
 
     Parameters:
-    - df (pd.DataFrame): the DataFrame to be filtered.
-    - year_list (List[int]): a list of years to filter the DataFrame by.
-    - region (str): the region to filter the DataFrame by.
+        df (pd.DataFrame): the DataFrame to be filtered.
+        year_list (List[int]): a list of years to filter the DataFrame by.
+        region (str): the region to filter the DataFrame by.
 
     Returns:
-    - pd.DataFrame: A filtered and cleaned pandas DataFrame.
+        pd.DataFrame: A filtered and cleaned pandas DataFrame.
     """
 
     # Filter
@@ -133,12 +133,12 @@ def save_data(df: pd.DataFrame, path: str, sep: str = ",") -> None:
     Saves a pandas DataFrame to a CSV file at the specified path, using the specified delimiter.
 
     Parameters:
-    - df (pd.DataFrame): the DataFrame to be saved.
-    - path (str): the file path where the CSV file will be saved.
-    - sep (str, optional): the delimiter string to be used in the CSV file. Defaults to ','.
+        df (pd.DataFrame): the DataFrame to be saved.
+        path (str): the file path where the CSV file will be saved.
+        sep (str, optional): the delimiter string to be used in the CSV file. Defaults to ','.
 
     Returns:
-    - None
+        None
     """
 
     df.to_csv(path, sep=sep, index=False, quoting=csv.QUOTE_ALL)
@@ -150,14 +150,14 @@ def merge_dataframes(df1, df2, common_field_df1, common_field_df2, columns_to_dr
     Then drops specified columns.
 
     Args:
-    df1 (pandas.DataFrame): First DataFrame.
-    df2 (pandas.DataFrame): Second DataFrame.
-    common_field_df1 (str): Common field in the first DataFrame.
-    common_field_df2 (str): Common field in the second DataFrame.
-    columns_to_drop (list): List of column names to drop.
+        df1 (pandas.DataFrame): First DataFrame.
+        df2 (pandas.DataFrame): Second DataFrame.
+        common_field_df1 (str): Common field in the first DataFrame.
+        common_field_df2 (str): Common field in the second DataFrame.
+        columns_to_drop (list): List of column names to drop.
 
     Returns:
-    pandas.DataFrame: Merged DataFrame with the new column 'pa_type' and specified columns dropped.
+        pandas.DataFrame: Merged DataFrame with the new column 'pa_type' and specified columns dropped.
     """
     # Merge the dataframes based on the common fields
     merged_df = pd.merge(df1, df2, left_on=common_field_df1, right_on=common_field_df2, how='inner')
@@ -179,11 +179,11 @@ def convert_columns_to_lowercase(df: pd.DataFrame, columns_to_modify:list) -> pd
     Converts the text of specified columns in a DataFrame to lowercase.
     
     Parameters:
-    - df (pd.DataFrame): The DataFrame to operate on.
-    - columns_to_modify (list of str): List of the names of the columns to be converted to lowercase.
+        df (pd.DataFrame): The DataFrame to operate on.
+        columns_to_modify (list of str): List of the names of the columns to be converted to lowercase.
 
     Returns:
-    pd.Dataframe
+        pd.Dataframe
     """
 
     for col in columns_to_modify:
@@ -196,7 +196,6 @@ def convert_columns_to_lowercase(df: pd.DataFrame, columns_to_modify:list) -> pd
             print(f"The column '{col}' does not exist in the DataFrame.")
 
     return df
-
 
 ### MAIN ###
 

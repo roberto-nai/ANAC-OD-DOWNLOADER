@@ -20,7 +20,7 @@ import json
 ### LOCAL IMPORT ###
 from config import config_reader
 from ssl_adapter import SSLAdapter
-from utility_manager.utilities import json_to_list_dict, check_and_create_directory
+from utility_manager.utilities import check_and_create_directory
 
 ### GLOBALS ###
 yaml_config = config_reader.config_read_yaml("config.yml", "config")
@@ -61,10 +61,10 @@ def url_generate(year_start:int, year_end:int, list_months:list, url_base:str) -
     Generates a list of URLs based on a range of years, a list of months, and a base URL.
 
     Parameters:
-    - year_start (int): the starting year of the range (inclusive).
-    - year_end (int): the ending year of the range (inclusive). It assumes `year_end` >= `year_start`.
-    - list_months (list): a list of strings representing months, where each month is expected to be in a format that matches the expected URL pattern (e.g., '01' for January).
-    - url_base (str): The base URL to which the year and month will be appended. The base URL should not end with a slash.
+        year_start (int): the starting year of the range (inclusive).
+        year_end (int): the ending year of the range (inclusive). It assumes `year_end` >= `year_start`.
+        list_months (list): a list of strings representing months, where each month is expected to be in a format that matches the expected URL pattern (e.g., '01' for January).
+        url_base (str): The base URL to which the year and month will be appended. The base URL should not end with a slash.
 
     Returns:
     - list: a list of strings, where each string is a fully constructed URL according to the described pattern.
@@ -80,18 +80,14 @@ def url_generate(year_start:int, year_end:int, list_months:list, url_base:str) -
 
 def url_download(list_urls:list, path_download:str) -> dict:
     """
-    Downloads files from a list of URLs if they do not already exist in the specified directory.
+    Downloads files from a list of URLs if they do not already exist in the specified directory. This function uses the 'requests' library for downloading and saving files.
     
     Parameters:
-    - url_list (list): a list of URLs of the files to be downloaded.
-    - path_download (str): the directory path where the files should be downloaded.
-    
-    Each file is checked against the existing files in the target directory. If a file already exists, it will not be downloaded again. This function uses the 'requests' library for downloading and saving files.
-    Note: Ensure you have permissions to write to the target directory.
+        url_list (list): a list of URLs of the files to be downloaded.
+        path_download (str): the directory path where the files should be downloaded.
 
     Returns: 
-    - dict: a dictionary with download results
-
+        dict: a dictionary with download results
     """
 
     dic_result = {"download_ok": 0, "download_not_necessary":0, "download_error":0}
@@ -131,17 +127,13 @@ def url_download(list_urls:list, path_download:str) -> dict:
 def url_unzip(download_dir: str) -> int:
     """
     Unzips all the .zip files located in the specified download path.
-    
-    This function searches for all .zip files within the given directory,
-    extracts their contents to the same directory, and uses Python's built-in
-    zipfile module for the extraction process, providing a more secure and
-    cross-platform approach compared to calling external unzip commands.
-    
+    This function searches for all .zip files within the given directory, extracts their contents to the same directory, and uses Python's built-in zipfile module for the extraction process, providing a more secure and cross-platform approach compared to calling external unzip commands.    
+
     Parameters:
-    - download_dir (str): the path to the directory containing the .zip files.
+        download_dir (str): the path to the directory containing the .zip files.
 
     Returns:
-    - int: number of unzippped files
+        int: number of unzippped files.
     """
 
     download_path = Path(download_dir)
@@ -160,12 +152,12 @@ def merge_csv_files(source_dir: str, output_dir:str, output_file: str) -> int:
     Merges all CSV files in the specified directory into a single CSV file.
     
     Parameters:
-    - source_dir (str): the path to the directory containing the CSV files to be merged.
-    - output_dir (str): the path to the output CSV directory where the merged content will be stored.
-    - output_file (str): the path to the output CSV file where the merged content will be stored.
+        source_dir (str): the path to the directory containing the CSV files to be merged.
+        output_dir (str): the path to the output CSV directory where the merged content will be stored.
+        output_file (str): the path to the output CSV file where the merged content will be stored.
 
     Returns:
-    - int: number of lines in the merged CSV file
+        int: number of lines in the merged CSV file
     """
 
     source_path = Path(source_dir)
