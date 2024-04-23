@@ -53,8 +53,8 @@ def read_urls_from_json(json_file:str) -> list:
     list_url = []
 
     try:
-        with open(json_file, 'r') as file:
-            list_url = json.load(file)
+        with open(json_file, 'r') as fp:
+            list_url = json.load(fp)
     except FileNotFoundError:
         print("Error: The file was not found.")
     except json.JSONDecodeError:
