@@ -164,12 +164,15 @@ _old/
 _todo/
 data/
 download/
+stats/
 **/.DS_Store
 
 # Ignore every file the directory
 data/*
 download/*
+stats/*
 # But do not ignore the directory itself
 !data/.gitkeep
 !download/.gitkeep
+!stats/.gitkeep
 

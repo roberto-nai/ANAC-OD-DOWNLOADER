@@ -2,10 +2,10 @@
 
 # For downloading purposes
 DOWNLOAD_DIR: download
-DOWNLOAD_URL: https://dati.anticorruzione.it/opendata/download/dataset/cig- # tenders dynamic URL
 YEAR_START_DOWNLOAD: 2016    # starting year for downloading ANAC Open Data
 YEAR_END_DOWNLOAD: 2022      # ending year for downloading ANAC Open Data
-ANAC_URLS_JSON: anac_static_urls.json # file with ANAC static URLs
+ANAC_STATIC_URLS_JSON: anac_static_urls.json # file with ANAC static URLs
+ANAC_DYNAMIC_URLS_JSON: anac_static_urls.json # file with ANAC dynamic URLs
 
 # PA registry
 PA_REG_DIR: pa_registry

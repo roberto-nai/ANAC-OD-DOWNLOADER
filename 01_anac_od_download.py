@@ -25,11 +25,12 @@ from utility_manager.utilities import check_and_create_directory
 ### GLOBALS ###
 yaml_config = config_reader.config_read_yaml("config.yml", "config")
 list_months = [f"{i:02}" for i in range(1, 13)]
-url_base = str(yaml_config["DOWNLOAD_URL"])
+# url_base = str(yaml_config["DOWNLOAD_URL"])
 year_start = int(yaml_config["YEAR_START_DOWNLOAD"])
 year_end = int(yaml_config["YEAR_END_DOWNLOAD"]) 
 data_dir = str(yaml_config["DATA_DIR"])
-url_statics_file = str(yaml_config["ANAC_URLS_JSON"])
+url_statics_file = str(yaml_config["ANAC_STATIC_URLS_JSON"])
+url_dynamic_file = str(yaml_config["ANAC_DYNAMIC_URLS_JSON"])
 
 # OUTPUT
 merge_file = f"bando_cig_{year_start}-{year_end}.csv" # final file with all the tenders following years
@@ -50,9 +51,14 @@ def read_urls_from_json(json_file:str) -> list:
     """
 
     list_url = []
-    
-    with open(json_file, 'r') as fp:
-        list_url = json.load(fp)
+
+    try:
+        with open(json_file, 'r') as file:
+            list_url = json.load(file)
+    except FileNotFoundError:
+        print("Error: The file was not found.")
+    except json.JSONDecodeError:
+        print("Error: The file is not a valid JSON.")
 
     return list_url
 
@@ -208,6 +214,7 @@ def main() -> None:
     print()
     
     print(">> Generating dinamic URLs")
+    url_base = read_urls_from_json(url_dynamic_file)
     list_urls_din = url_generate(year_start, year_end, list_months, url_base)
     list_urls_len = len(list_urls_din)
     print("URLs generated:", list_urls_len)
