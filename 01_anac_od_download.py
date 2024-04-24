@@ -31,6 +31,7 @@ year_end = int(yaml_config["YEAR_END_DOWNLOAD"])
 data_dir = str(yaml_config["DATA_DIR"])
 url_statics_file = str(yaml_config["ANAC_STATIC_URLS_JSON"])
 url_dynamic_file = str(yaml_config["ANAC_DYNAMIC_URLS_JSON"])
+cig_prefix = str(yaml_config["CIG_PREFIX"])
 
 # OUTPUT
 merge_file = f"bando_cig_{year_start}-{year_end}.csv" # final file with all the tenders following years
@@ -101,7 +102,16 @@ def url_download(list_urls:list, path_download:str) -> dict:
     s = requests.Session()
     s.mount('https://', SSLAdapter())
 
+    list_urls_len = len(list_urls)
+    
+    i = 0
+
     for url in list_urls:
+
+        i+=1
+
+        print(f"[{i} / {list_urls_len}]")
+
         print(f"URL to be downloaded: {url}")
         
         file_name_zip = Path(url).name
@@ -110,9 +120,9 @@ def url_download(list_urls:list, path_download:str) -> dict:
         file_name_csv = file_name_zip.replace('.zip', '.csv')
         print(f"File to be checked: {file_name_csv}")
         
-        path_check = Path(path_download) / file_name_csv
+        path_check = Path(path_download) / file_name_zip
         if path_check.exists():
-            print("File already downloaded\n")
+            print(f"WARNING! File '{file_name_zip}' already downloaded\n")
             dic_result["download_not_necessary"]+=1
             continue
         try:
@@ -123,10 +133,10 @@ def url_download(list_urls:list, path_download:str) -> dict:
                 file.write(response.content)
             # command = "wget -P " + "./" + path_download + " " + url
             # os.system(command)
-            print("Download successful\n")
+            print("OK! Download successful\n")
             dic_result["download_ok"]+=1
         except requests.RequestException as e:
-            print(f"WARNING! Error downloading {url}: {e}\n")
+            print(f"ERROR! Error downloading {url}: {e}\n")
             dic_result["download_error"]+=1
     return dic_result
 
@@ -153,13 +163,14 @@ def url_unzip(download_dir: str) -> int:
 
     return unzipped_files
 
-def merge_csv_files(source_dir: str, output_dir:str, output_file: str) -> int:
+def merge_csv_files(source_dir: str, output_dir:str, prefix_name:str, output_file: str) -> int:
     """
-    Merges all CSV files in the specified directory into a single CSV file.
+    Merges all CSV files with a specific prefix name in the specified directory into a single CSV file (useful for "bando CIG" table).
     
     Parameters:
         source_dir (str): the path to the directory containing the CSV files to be merged.
         output_dir (str): the path to the output CSV directory where the merged content will be stored.
+        prefix_name (str): the prefix of files to be merged.
         output_file (str): the path to the output CSV file where the merged content will be stored.
 
     Returns:
@@ -176,7 +187,7 @@ def merge_csv_files(source_dir: str, output_dir:str, output_file: str) -> int:
 
     # Open the output file in write mode
     with output_path.open(mode='w') as outfile:
-        for csv_file in source_path.glob('*.csv'):
+        for csv_file in source_path.glob(f'{prefix_name}*.csv'):
             with csv_file.open(mode='r') as infile:
                 # Read the content of the current CSV file and write it to the output file
                 outfile.write(infile.read())
@@ -245,7 +256,7 @@ def main() -> None:
     print()
 
     print(">> Merging files")
-    lines_csv = merge_csv_files(download_dir, merge_file)
+    lines_csv = merge_csv_files(download_dir, download_dir, cig_prefix, merge_file)
     print(f"Lines in the merged CSV file '{merge_file}' (with duplicates): {lines_csv}")
     print()
 

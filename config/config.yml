@@ -40,3 +40,6 @@ ANAC_REGIONS_JSON: anac_regions.json
 # STATS
 ANAC_STATS_DIR: stats
 ANAC_STATS_FILE: anac_stats_region.csv
+
+# MERGING
+CIG_PREFIX: cig_csv_ # Prefix of the files of "Bando CIG" to be merged
