@@ -193,7 +193,7 @@ def merge_csv_files(source_dir: str, output_dir:str, prefix_name:str, output_fil
                 outfile.write(infile.read())
             print(f"Merged: {csv_file}")
 
-    print(f"All CSV files in {source_dir} have been merged into '{output_file}'.\n")
+    print(f"All CSV files in {source_dir} with file name prefix '{prefix_name}' have been merged into '{output_file}'.\n")
 
     # Count the lines in the merged CSV file
 
@@ -256,6 +256,7 @@ def main() -> None:
     print()
 
     print(">> Merging files")
+    print("Prefix for merging:", cig_prefix)
     lines_csv = merge_csv_files(download_dir, download_dir, cig_prefix, merge_file)
     print(f"Lines in the merged CSV file '{merge_file}' (with duplicates): {lines_csv}")
     print()
