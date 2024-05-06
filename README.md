@@ -4,6 +4,7 @@
 
 ## Goal
 The script downloads the Open Data from the ANAC website, unzips them, merges the ```cig_*.csv``` type data, filters them according to the parameters in the ```anac_od_select.json``` file, and finally extracts the data by region.
+Starting website: [https://dati.anticorruzione.it/opendata](https://dati.anticorruzione.it/opendata)
 
 ### > Directories
 
