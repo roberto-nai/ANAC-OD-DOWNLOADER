@@ -6,11 +6,9 @@
 
 #### config
 Configuration directory with ```config.yml```
-- [ ] Define the starting/ending years to download ```YEAR_START_DOWNLOAD``` and ```YEAR_END_DOWNLOAD```
-- [ ] Define the starting dataset to filter in ```ANAC_OD_FILE``` (it contains the ```bando_cig_*``` merged files from dynamic URLs)
-- [ ] Define the starting/ending years to filter in ```YEAR_START_FILTER``` and ```YEAR_END_FILTER```
-- [ ] Define the region to filter in ```ANAC_OD_REGION``` following ANAC region names
-- [ ] Define the region output name ```ANAC_OD_REGION_OUT``` (convenience name for next use)
+- [ ] Define the starting/ending years to download ```YEAR_START_DOWNLOAD``` and ```YEAR_END_DOWNLOAD``` (it contains the ```bando_cig_*``` merged files from dynamic URLs).
+- [ ] Define the filters in the file referenced by ```ANAC_OD_SELECT```.
+- [ ] Define the filters in the file referenced by ```ANAC_OD_REGION``` to create CSV filtered by region.
 
 #### data
 Directory with filtered data starting from the one downloaded.
@@ -33,15 +31,18 @@ Directory with utilities functions.
 Application to download public notices (tenders) from the ANAC website and create a global dataset.
 
 #### ```02_anac_od_select.py```
-Application to select ANAC Open Data of interest from the global dataset.
+Application to select ANAC Open Data of interest from the global dataset. Filter the main data obtained from ```01_anac_od_download.py```.
 
-#### ```anac_regions.json```
-List of regions according to ANAC nomenclature and filtering convenience name.
+#### ```anac_od_select.json```
+List of filters according to ANAC nomenclature.
 
-#### ```anac_dynamic_urls.json```
+#### ```anac_od_region.json```
+List of filters according to ANAC region names and convenience output name (generates one file per region).
+
+#### ```anac_urls_dynamic.json```
 List of dynamic URLs (files) to download; source [https://dati.anticorruzione.it/opendata](https://dati.anticorruzione.it/opendata)
 
-#### ```anac_static_urls.json```
+#### ```anac_urls_static.json```
 List of static URLs (files) to download; source [https://dati.anticorruzione.it/opendata](https://dati.anticorruzione.it/opendata)
 
 #### ``ssl_adapter.py``

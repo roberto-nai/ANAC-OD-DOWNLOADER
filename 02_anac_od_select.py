@@ -12,44 +12,43 @@ from utility_manager.utilities import json_to_list_dict, check_and_create_direct
 
 ### GLOBALS ###
 yaml_config = config_reader.config_read_yaml("config.yml", "config")
-data_dir = str(yaml_config["DATA_DIR"])
-data_file_schema = dict(yaml_config["ANAC_OD_SCHEMA"])
-data_file_cols = list(yaml_config["ANAC_OD_SCHEMA"])
 csv_sep = str(yaml_config["CSV_SEP"])
+anac_odfilter_json = str(yaml_config["ANAC_OD_SELECT"]) # filter configuration
+anac_regions_json = str(yaml_config["ANAC_OD_REGION"]) # filter configuration
+year_start = int(yaml_config["YEAR_START_DOWNLOAD"])
+year_end = int(yaml_config["YEAR_END_DOWNLOAD"]) 
+# Registry
 pa_reg_dir = str(yaml_config["PA_REG_DIR"])
 pa_reg_file = str(yaml_config["PA_REG_FILE"])
 pa_reg_columns = list(yaml_config["PA_REG_SCHEMA"])
 pa_reg_dict = dict(yaml_config["PA_REG_SCHEMA"])
-anac_regions_json = str(yaml_config["ANAC_REGIONS_JSON"])
+
 
 # INPUT
-data_file = str(yaml_config["ANAC_OD_FILE"])
-year_start = int(yaml_config["YEAR_START_FILTER"])
-year_end = int(yaml_config["YEAR_END_FILTER"]) 
-year_list_filter = list(range(year_start, year_end+1)) # year_end+1 to keep year_end inclusive
+data_file = f"bando_cig_{year_start}-{year_end}.csv" # starting file with all the tenders following years
+data_dir = str(yaml_config["DATA_DIR"])
 
 # OUTPUT
 anac_stats_dir = str(yaml_config["ANAC_STATS_DIR"])
 anac_stats_file = str(yaml_config["ANAC_STATS_FILE"])
+list_stats = []
 
 ### FUNCTIONS ###
-def read_anac_data(path: str, col_list: list[str], col_type: dict[str, str], csv_sep: str = ",") -> pd.DataFrame:
+def read_anac_data(path: str, col_list: list, col_type:dict, csv_sep: str = ";") -> pd.DataFrame:
     """
     Reads data from a CSV file into a pandas DataFrame with specified columns and data types.
 
     Parameters:
         path (str): the file path to the CSV file to be read.
-        columns (list[str]): a list of column names to be read from the CSV file.
-        dtype (dict[str, str]): a dictionary mapping column names to their respective data types.
-        sep (str, optional): the delimiter string used in the CSV file. Defaults to ','.
+        columns (list): a list of column names to be read from the CSV file.
+        sep (str): the delimiter string used in the CSV file. Defaults to ';'.
 
     Returns:
         pd.DataFrame: a pandas DataFrame containing the data read from the CSV file.
     """
 
-    df = pd.read_csv(path, usecols=col_list, dtype=col_type, sep=csv_sep)
+    df = pd.read_csv(path, usecols=col_list, dtype=col_type, sep=csv_sep, low_memory=False)
     df = df.drop_duplicates()
-    print_details(df, "Initial ANAC Open Data")
     return df
 
 def read_pa_data(path: str, col_list: list[str], col_type: dict[str, str]):
@@ -89,44 +88,54 @@ def print_details(df: pd.DataFrame, title: str) -> None:
     print(f"Dataframe size: {df.shape}\n")
     # ANAC
     if "anno_pubblicazione" in df.columns:
-        print(f"Years available: {df['anno_pubblicazione'].unique()}\n")
+        print(f"anno_pubblicazione distinct values: {df['anno_pubblicazione'].unique()}\n")
     if "sezione_regionale" in df.columns:
-        print(f"Regions available: {df['sezione_regionale'].unique()}\n")
-    # PA
-    if "Descr_Tipologia_SIOPE" in df.columns:
-        print(f"PA types in Registry: {df['Descr_Tipologia_SIOPE'].unique()}\n")
-    if "pa_type" in df.columns:
-        print(f"PA types (final): {df['pa_type'].unique()}\n")
+        print(f"sezione_regionale distinct values: {df['sezione_regionale'].unique()}\n")
+    if "oggetto_principale_contratto" in df.columns:
+        print(f"oggetto_principale_contratto distinct values: {df['oggetto_principale_contratto'].unique()}\n")
+    if "settore" in df.columns:
+        print(f"settore distinct values: {df['settore'].unique()}\n")
     print(f"{title} dataframe preview:")
     print(df.head(), "\n\n")
     print(df.columns, "\n\n")
+    print(df.dtypes, "\n\n")
 
-def filter_data(df: pd.DataFrame, year_list: list[int], region: str) -> pd.DataFrame:
+def filter_data(df: pd.DataFrame, filter_list: list) -> pd.DataFrame:
     """
     Filters a pandas DataFrame based on a list of years and a specific region, and performs
     some specific cleaning tasks on the 'sezione_regionale', 'settore', and 'cod_cpv' columns.
 
     Parameters:
         df (pd.DataFrame): the DataFrame to be filtered.
-        year_list (List[int]): a list of years to filter the DataFrame by.
-        region (str): the region to filter the DataFrame by.
+        filter_list (lit[dict]): a list filters.
 
     Returns:
         pd.DataFrame: A filtered and cleaned pandas DataFrame.
     """
 
     # Filter
-    filtered_df = df[(df["anno_pubblicazione"].isin(year_list)) & (df["sezione_regionale"] == region)].copy()
+
+    for filter_data in filter_list:
+        for key, key_value_list in filter_data.items():
+            print(f"Key: {key}")
+            print(f"Value: {key_value_list}")
+            print()
+            if key in df.columns:
+                if len(key_value_list) > 0:
+                    df = df[df[key].isin(key_value_list)]
+    
+    # filtered_df = df.copy()
+    return df
+
+def clean_data(df: pd.DataFrame,) -> pd.DataFrame:
     # Clean
-    filtered_df['sezione_regionale'] = filtered_df['sezione_regionale'].str.replace("SEZIONE REGIONALE ", "", regex=False)
-    filtered_df['settore'] = filtered_df['settore'].str.replace("SETTORI ", "", regex=False)
+    df['sezione_regionale'] = df['sezione_regionale'].str.replace("SEZIONE REGIONALE ", "", regex=False)
+    df['settore'] = df['settore'].str.replace("SETTORI ", "", regex=False)
     # CPV division
-    filtered_df['cpv_division'] = filtered_df['cod_cpv'].apply(lambda x: x[:2] if pd.notnull(x) and x != '' else '')
+    df['cpv_division'] = df['cod_cpv'].apply(lambda x: x[:2] if pd.notnull(x) and x != '' else '')
     # Order
-    filtered_df = filtered_df.sort_values(by=['anno_pubblicazione', 'cig'])
-    # Print
-    print_details(filtered_df, "Selected ANAC Open Data")
-    return filtered_df
+    df = df.sort_values(by=['anno_pubblicazione', 'cig'])
+    return df
 
 def save_data(df: pd.DataFrame, path: str, sep: str = ",") -> None:
     """
@@ -211,10 +220,18 @@ def main():
 
     print(">> Generating output directories")
     check_and_create_directory(data_dir)
+    check_and_create_directory(anac_stats_dir)
+    print()
+
+    print(">> Reading ANAC filter JSON")
+    print("File:", anac_odfilter_json)
+    filter_list = json_to_list_dict(anac_odfilter_json)
+    filter_list_len = len(filter_list)
+    print("Filters found in JSON:", filter_list_len)
+    print(filter_list)
     print()
 
     print(">> Reading ANAC regions JSON")
-    print()
     print("File:", anac_regions_json)
     regions_list = json_to_list_dict(anac_regions_json)
     regions_list_len = len(regions_list)
@@ -223,41 +240,74 @@ def main():
     print()
 
     print(">> Reading initial ANAC Open Data")
-    print()
     path_anac_od = Path(data_dir) / data_file
-    df_anac = read_anac_data(path_anac_od, data_file_cols, data_file_schema, csv_sep)
+    schema_cols = ["cig","cig_accordo_quadro","numero_gara","oggetto_gara","importo_complessivo_gara","n_lotti_componenti","oggetto_lotto","importo_lotto","oggetto_principale_contratto","stato","settore","luogo_istat","provincia","data_pubblicazione","data_scadenza_offerta","cod_tipo_scelta_contraente","tipo_scelta_contraente","cod_modalita_realizzazione","modalita_realizzazione","codice_ausa","cf_amministrazione_appaltante","denominazione_amministrazione_appaltante","sezione_regionale","id_centro_costo","denominazione_centro_costo","anno_pubblicazione","mese_pubblicazione","cod_cpv","descrizione_cpv","flag_prevalente"]
+    schema_type = {"cig":object,"cig_accordo_quadro":object, "anno_pubblicazione":object}
+    df_anac = read_anac_data(path_anac_od, schema_cols, schema_type, csv_sep)
+    print_details(df_anac, "Initial ANAC Open Data")
     print()
 
-    print(">> Preparing output directories")
-    check_and_create_directory(anac_stats_dir)
+    print(">> Reading PA Registry")
+    path_pa_registry = Path(pa_reg_dir) / pa_reg_file
+    df_pa_registry = read_pa_data(path_pa_registry, pa_reg_columns, pa_reg_dict)
+    print()
+    
+    print(">> Filtering (1 - generic)")
+    df_filtered_1 = filter_data(df_anac, filter_list)
+    print()
+    # Print
+    print_details(df_filtered_1, "Filtered ANAC Open Data (1 - generic)")
+    
+    # Merge with PA registry
+    print(">> Merging ANAC Open Data and PA Registry")
+    columns_to_drop = ['Codice_Tipologia_MIUR', 'Codice_Tipologia_SIOPE', 'Denominazione', 'Descr_Tipologia_MIUR', 'Descr_Tipologia_SIOPE', 'CF']
+    merged_data = merge_dataframes(df_filtered_1, df_pa_registry, 'cf_amministrazione_appaltante', 'CF', columns_to_drop)
+    merged_data = merged_data.drop_duplicates()
+    merged_data_len = len(merged_data)
+    print("done!")
+    print()
+
+    # Clean
+    df_filtered_1_clean = clean_data(merged_data)
+
+    # Stats on dataframe
+    dic_stat = {"region":"all", "size":len(df_filtered_1_clean)}
+    list_stats.append(dic_stat)
+
+    # Save
+    print(">> Saving data filtered (1 - generic)")
+    data_file_out = f"bando_cig_{year_start}-{year_end}_filtered.csv"
+    path_out = Path(data_dir) / data_file_out
+    print("Path:", path_out)
+    save_data(df_filtered_1_clean, path_out, csv_sep)
+    print()
+
+    print(">> Filtering (2 - by region)")
 
     i = 0
-    
-    list_stats = []
 
-    for region in regions_list:
+    for region_dic in regions_list:
         
         i+=1
         
         print(f"[{i} / {regions_list_len}]\n")
 
-        print("Region tuple:", region)
+        print("Region dict:", region_dic)
         print()
 
         # Get region for file name and ANAC filter
-        region_output = region[0]
-        region_filter = region[1]
+        region_key = next(iter(region_dic))
+        region_filter = region_dic[region_key]
+        region_output = region_key
+        region_filter_list = [{"sezione_regionale": [region_filter]}] # the filter is a list of dict
+    
 
         print(">> Filtering data from ANAC Open Data")
-        print("Region:", region_filter)
-        df_filtered = filter_data(df_anac, year_list_filter, region_filter)
+        print("Region (filter):", region_filter)
+        print("Region (output):", region_output)
+        df_filtered = filter_data(df_anac, region_filter_list)
         print()
 
-        print(">> Reading PA Registry")
-        print()
-        path_pa_registry = Path(pa_reg_dir) / pa_reg_file
-        df_pa_registry = read_pa_data(path_pa_registry, pa_reg_columns, pa_reg_dict)
-        print()
 
         # Merge df_filtered with df_pa_registry and drop columns not needed
         print(">> Merging ANAC Open Data and PA Registry")
@@ -277,14 +327,17 @@ def main():
         merged_data = convert_columns_to_lowercase(merged_data,col_low)
         print()
 
-        print(">> Saving data filtered")
-        data_file_out = str(yaml_config["ANAC_FILE_FILTERED"]).replace("YS",str(year_start)).replace("YE", str(year_end)).replace("R",region_output)
-        print_details(merged_data, "Final dataframe")
+        # Clean
+        df_filtered_2_clean = clean_data(merged_data)
+
+        print(">> Saving data filtered (2 - by region)")
+        data_file_out = f"bando_cig_{year_start}-{year_end}_{region_output}.csv"
+        print_details(df_filtered_2_clean, "Final dataframe")
         path_out = Path(data_dir) / data_file_out
-        save_data(merged_data, path_out, csv_sep)
+        save_data(df_filtered_2_clean, path_out, csv_sep)
         print()
 
-        # Stats onf dataframe by region
+        # Stats on dataframe by region
         dic_stat = {"region":region_output, "size":merged_data_len}
         list_stats.append(dic_stat)
 

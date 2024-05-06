@@ -35,7 +35,7 @@ cig_prefix = str(yaml_config["CIG_PREFIX"])
 
 # OUTPUT
 merge_file = f"bando_cig_{year_start}-{year_end}.csv" # final file with all the tenders following years
-download_dir = str(yaml_config["DOWNLOAD_DIR"])
+download_dir = str(yaml_config["DOWNLOAD_DIR"]) 
 data_dir = str(yaml_config["DATA_DIR"])
 
 ### FUNCTIONS ###
@@ -61,7 +61,11 @@ def read_urls_from_json(json_file:str) -> list:
     except json.JSONDecodeError:
         print("Error: The file is not a valid JSON.")
 
+    # print(list_url) # debug
+
     return list_url
+
+
 
 def url_generate(year_start:int, year_end:int, list_months:list, url_base:str) -> list:
     """
@@ -80,7 +84,7 @@ def url_generate(year_start:int, year_end:int, list_months:list, url_base:str) -
     list_url = []
     for year in range(year_start, year_end+1): # year_end+1 to keep year_end inclusive
         for month in list_months:
-            url = f"{url_base}{year}/filesystem/cig_csv_{year}_{month}.zip"
+            url = f"{url_base[0]}{year}/filesystem/cig_csv_{year}_{month}.zip"
             # print(url)
             list_url.append(url)
     return list_url
@@ -228,19 +232,22 @@ def main() -> None:
     url_base = read_urls_from_json(url_dynamic_file)
     list_urls_din = url_generate(year_start, year_end, list_months, url_base)
     list_urls_len = len(list_urls_din)
-    print("URLs generated:", list_urls_len)
+    print("URLs generated (num):", list_urls_len)
+    # print(list_urls_din) # debug
     print()
 
     print(">> Generating static URLs")
     list_urls_sta = read_urls_from_json(url_statics_file)
     list_urls_sta_len = len(list_urls_sta)
-    print("URLs generated:", list_urls_sta_len)
+    print("URLs generated (num):", list_urls_sta_len)
+    # print(list_urls_sta) # debug
     print()
 
     print(">> Merging dynamic and static URLs")
     list_urls_all = list_urls_din + list_urls_sta
     list_urls_all_len = len(list_urls_all)
     print("URLs generated:", list_urls_all_len)
+    # print(list_urls_all) # debug
     print()
 
     print(">> Downloading from URLs")
@@ -257,7 +264,7 @@ def main() -> None:
 
     print(">> Merging files")
     print("Prefix for merging:", cig_prefix)
-    lines_csv = merge_csv_files(download_dir, download_dir, cig_prefix, merge_file)
+    lines_csv = merge_csv_files(download_dir, data_dir, cig_prefix, merge_file)
     print(f"Lines in the merged CSV file '{merge_file}' (with duplicates): {lines_csv}")
     print()
 

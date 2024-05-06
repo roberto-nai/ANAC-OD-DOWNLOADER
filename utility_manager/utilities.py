@@ -9,16 +9,17 @@ def json_to_list_dict(json_file: str) -> list:
         json_file (str): The path to the JSON file.
 
     Returns:
-        list: A list of tuples containing tuples of key-value pairs extracted and sorted from the JSON file.
+        list: A list of dictionary containing key-value pairs extracted and sorted from the JSON file.
     """
     # Load JSON data from file
     with open(json_file, 'r') as file:
         data = json.load(file)
     
-    # Extract key-value pairs into a list and sort alphabetically by keys
+    # Extract key-value pairs into a list, sort alphabetically by keys and convert each tuple to a dictionary
     sorted_key_value_pairs = sorted(data.items(), key=lambda x: x[0])
-
-    return sorted_key_value_pairs
+    sorted_dictionaries = [{key: value} for key, value in sorted_key_value_pairs]
+    
+    return sorted_dictionaries
 
 
 def check_and_create_directory(dir_name:str, dir_parent:str="") -> None:
@@ -39,8 +40,7 @@ def check_and_create_directory(dir_name:str, dir_parent:str="") -> None:
     else:
         path_directory = Path(dir_name)
     if path_directory.exists() and path_directory.is_dir():
-        print("The directory '{}' already exists: {}".format(dir_name, path_directory))
+        print(f"The directory '{path_directory}' already exists")
     else:
         path_directory.mkdir(parents=True, exist_ok=True)
-        print("The directory '{}' has been created successfully: {}".format(dir_name, path_directory))
-    print()
+        print(f"The directory '{path_directory}' has been created successfully")

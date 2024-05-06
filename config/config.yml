@@ -1,11 +1,15 @@
 # config.yml
 
-# For downloading purposes
+# DOWNLOAD
 DOWNLOAD_DIR: download
 YEAR_START_DOWNLOAD: 2016    # starting year for downloading ANAC Open Data
-YEAR_END_DOWNLOAD: 2022      # ending year for downloading ANAC Open Data
-ANAC_STATIC_URLS_JSON: anac_static_urls.json # file with ANAC static URLs
-ANAC_DYNAMIC_URLS_JSON: anac_static_urls.json # file with ANAC dynamic URLs
+YEAR_END_DOWNLOAD: 2023      # ending year for downloading ANAC Open Data
+ANAC_STATIC_URLS_JSON: anac_urls_static.json # file with ANAC static URLs
+ANAC_DYNAMIC_URLS_JSON: anac_urls_dynamic.json # file with ANAC dynamic URLs
+CSV_SEP: ;
+
+# MERGING
+CIG_PREFIX: cig_csv_ # Prefix of the files of "Bando CIG" to be merged
 
 # PA registry
 PA_REG_DIR: pa_registry
@@ -20,26 +24,9 @@ PA_REG_SCHEMA:
 
 # For filtering purposes
 DATA_DIR: data
-ANAC_OD_FILE: bando_cig_2007-2023.csv # Merged CSV file (starting point)
-YEAR_START_FILTER: 2016    # starting year for filtering ANAC Open Data
-YEAR_END_FILTER: 2022      # ending year for filtering ANAC Open Data
-CSV_SEP: ;
-ANAC_OD_SCHEMA: # Desired columns
-  cig: object
-  cf_amministrazione_appaltante: object
-  oggetto_lotto: object
-  settore: object
-  oggetto_principale_contratto: object
-  cod_cpv: object
-  sezione_regionale: object
-  anno_pubblicazione: int
-  cod_tipo_scelta_contraente: int
-ANAC_FILE_FILTERED: bando_cig_YS-YE_R.csv # YS = year start, YE = year end, R = Region
-ANAC_REGIONS_JSON: anac_regions.json
+ANAC_OD_SELECT: anac_od_select.json # filter configuration
+ANAC_OD_REGION: anac_od_region.json # filter configuration
 
 # STATS
 ANAC_STATS_DIR: stats
 ANAC_STATS_FILE: anac_stats_region.csv
-
-# MERGING
-CIG_PREFIX: cig_csv_ # Prefix of the files of "Bando CIG" to be merged
