@@ -1,6 +1,9 @@
-# ANAC Open Data downloader and filter by region and year
+# ANAC Open Data downloader
 
 ![PyPI - Python Version](https://img.shields.io/badge/python-3.12-3776AB?logo=python)
+
+## Goal
+The script downloads the Open Data from the ANAC website, unzips them, merges the ```cig_*.csv``` type data, filters them according to the parameters in the ```anac_od_select.json``` file, and finally extracts the data by region.
 
 ### > Directories
 
