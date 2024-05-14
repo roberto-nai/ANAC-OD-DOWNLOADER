@@ -51,3 +51,20 @@ List of static URLs (files) to download; source [https://dati.anticorruzione.it/
 
 #### ``ssl_adapter.py``
 Class to execute requests via HTTPS.
+
+If you use it, please cite:
+
+```
+@article{NAI2023105887,
+title = {Public tenders, complaints, machine learning and recommender systems: a case study in public administration},
+journal = {Computer Law & Security Review},
+volume = {51},
+pages = {105887},
+year = {2023},
+issn = {0267-3649},
+doi = {https://doi.org/10.1016/j.clsr.2023.105887},
+url = {https://www.sciencedirect.com/science/article/pii/S0267364923000973},
+author = {Roberto Nai and Rosa Meo and Gabriele Morina and Paolo Pasteris},
+keywords = {Public procurement, Legal prediction, Complaint detection, Knowledge discovery, Natural language processing, Machine learning, Recommender system},
+}
+```
