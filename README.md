@@ -29,7 +29,7 @@ Directory with procurements stats.
 #### utility_manager
 Directory with utilities functions.
 
-## > Script Execution
+### > Script Execution
 
 #### ```01_anac_od_download.py```
 Application to download public notices (tenders) from the ANAC website and create a global dataset.
@@ -52,7 +52,7 @@ List of static URLs (files) to download; source [https://dati.anticorruzione.it/
 #### ``ssl_adapter.py``
 Class to execute requests via HTTPS.
 
-## > Script Dependencies
+### > Script Dependencies
 See ```requirements.txt``` for the required libraries (```pip install -r requirements.txt```).  
 
 ## Share
