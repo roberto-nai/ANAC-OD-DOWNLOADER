@@ -3,6 +3,7 @@
     "https://dati.anticorruzione.it/opendata/download/dataset/aggiudicazioni/filesystem/aggiudicazioni_csv.zip",
     "https://dati.anticorruzione.it/opendata/download/dataset/attestazioni-soa/filesystem/attestazioni-soa_csv.zip",
     "https://dati.anticorruzione.it/opendata/download/dataset/avvio-contratto/filesystem/avvio-contratto_csv.zip",
+    "https://dati.anticorruzione.it/opendata/download/dataset/categorie-opera/filesystem/categorie-opera_csv.zip",
     "https://dati.anticorruzione.it/opendata/download/dataset/centri-di-costo/filesystem/centri-di-costo_csv.zip",
     "https://dati.anticorruzione.it/opendata/download/dataset/collaudo/filesystem/collaudo_csv.zip",
     "https://dati.anticorruzione.it/opendata/download/dataset/fine-contratto/filesystem/fine-contratto_csv.zip",
@@ -16,4 +17,5 @@
     "https://dati.anticorruzione.it/opendata/download/dataset/subappalti/filesystem/subappalti_csv.zip",
     "https://dati.anticorruzione.it/opendata/download/dataset/bandi-cig-tipo-scelta-contraente/filesystem/bandi-cig-tipo-scelta-contraente_csv.zip",
     "https://dati.anticorruzione.it/opendata/download/dataset/varianti/filesystem/varianti_csv.zip"
+    
 ]
