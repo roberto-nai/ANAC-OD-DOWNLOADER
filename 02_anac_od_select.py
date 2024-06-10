@@ -1,5 +1,13 @@
 # 02_anac_od_select.py
 
+"""
+Script name: 01_istat_bdap_od_download.py
+Author: R. Nai
+Creation date: 10/01/2024
+Last modified: 01/03/2024 (added class SSLAdapter)
+Description: selects data from the general dataset by filtering them on the basis of ANAC_OD_SELECT and ANAC_OD_REGION. It then applies a join to the PA data obtained from ANAC and Open BDAP.
+"""
+
 ### IMPORT ###
 import pandas as pd
 import csv

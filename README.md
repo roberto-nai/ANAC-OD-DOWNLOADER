@@ -39,7 +39,7 @@ Application to download public notices (tenders) from the ANAC website and creat
 Application to download ISTAT and Open BDAP data. After downloading, move the CSV and XLSX files to ```OD_ISTAT_DIR``` and ```OD_BDAP_DIR```.
 
 #### ```02_anac_od_select.py```
-Application to select ANAC Open Data of interest from the global dataset. Filter the main data obtained from ```01_anac_od_download.py```.
+Application to select ANAC Open Data of interest from the global dataset. It then applies a join to the PA data obtained from ANAC and Open BDAP. Filter the main data obtained from ```01_anac_od_download.py```.
 
 #### ```anac_od_region.json```
 List of filters according to ANAC region names and convenience output name (generates one file per region).
