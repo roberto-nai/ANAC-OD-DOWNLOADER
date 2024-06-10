@@ -162,17 +162,29 @@ cython_debug/
 # My Project Directories
 _old/
 _todo/
-data/
-download/
+download_anac/
+download_bdap/
+download_istat/
+open_data_anac/
+open_data_bdap/
+open_data_istat/
 stats/
 **/.DS_Store
 
 # Ignore every file the directory
-data/*
-download/*
+download_anac/*
+download_bdap/*
+download_istat/*
+open_data_anac/*
+open_data_bdap/*
+open_data_istat/*
 stats/*
 # But do not ignore the directory itself
-!data/.gitkeep
-!download/.gitkeep
+download_anac/.gitkeep
+download_bdap/.gitkeep
+download_istat/.gitkeep
+open_data_anac/.gitkeep
+open_data_bdap/.gitkeep
+open_data_istat/.gitkeep
 !stats/.gitkeep
 

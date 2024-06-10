@@ -17,16 +17,16 @@ anac_odfilter_json = str(yaml_config["ANAC_OD_SELECT"]) # filter configuration
 anac_regions_json = str(yaml_config["ANAC_OD_REGION"]) # filter configuration
 year_start = int(yaml_config["YEAR_START_DOWNLOAD"])
 year_end = int(yaml_config["YEAR_END_DOWNLOAD"]) 
+
 # Registry
-pa_reg_dir = str(yaml_config["PA_REG_DIR"])
-pa_reg_file = str(yaml_config["PA_REG_FILE"])
+pa_reg_dir = str(yaml_config["OD_BDAP_DIR"])
+pa_reg_file = str(yaml_config["OD_BDAP_FILE"])
 pa_reg_columns = list(yaml_config["PA_REG_SCHEMA"])
 pa_reg_dict = dict(yaml_config["PA_REG_SCHEMA"])
 
-
 # INPUT
 data_file = f"bando_cig_{year_start}-{year_end}.csv" # starting file with all the tenders following years
-data_dir = str(yaml_config["DATA_DIR"])
+data_dir = str(yaml_config["OD_ANAC_DIR"])
 
 # OUTPUT
 anac_stats_dir = str(yaml_config["ANAC_STATS_DIR"])
@@ -51,14 +51,14 @@ def read_anac_data(path: str, col_list: list, col_type:dict, csv_sep: str = ";")
     df = df.drop_duplicates()
     return df
 
-def read_pa_data(path: str, col_list: list[str], col_type: dict[str, str]):
+def read_pa_data(path: str, col_list: list, col_type: dict):
     """
     Reads an XLSX file and converts specific columns to 'object' type.
 
     Parameters:    
         path (str): the file path to the XLSX file to be read.
-        col_list (list[str]): a list of column names to be read from the CSV file.
-        col_type (dict[str, str]): a dictionary mapping column names to their respective data types.    
+        col_list (list): a list of column names to be read from the CSV file.
+        col_type (dict): a dictionary mapping column names to their respective data types.    
 
     Returns:
         pandas.DataFrame: The DataFrame with specified columns converted to 'object' type.
@@ -246,20 +246,28 @@ def main():
     df_anac = read_anac_data(path_anac_od, schema_cols, schema_type, csv_sep)
     print_details(df_anac, "Initial ANAC Open Data")
     print()
-
-    print(">> Reading PA Registry")
-    path_pa_registry = Path(pa_reg_dir) / pa_reg_file
-    df_pa_registry = read_pa_data(path_pa_registry, pa_reg_columns, pa_reg_dict)
-    print()
     
     print(">> Filtering (1 - generic)")
     df_filtered_1 = filter_data(df_anac, filter_list)
     print()
     # Print
     print_details(df_filtered_1, "Filtered ANAC Open Data (1 - generic)")
+    # Save
+    print(">> Saving data filtered (1 - generic) without BDAP")
+    data_file_out = f"bando_cig_{year_start}-{year_end}_filtered.csv"
+    path_out = Path(data_dir) / data_file_out
+    print("Path:", path_out)
+    save_data(df_filtered_1, path_out, csv_sep)
+    print()
+
+    # Loading BDAP
+    print(">> Reading BDAP")
+    path_pa_registry = Path(pa_reg_dir) / pa_reg_file
+    df_pa_registry = read_pa_data(path_pa_registry, pa_reg_columns, pa_reg_dict)
+    print()
     
-    # Merge with PA registry
-    print(">> Merging ANAC Open Data and PA Registry")
+    # Merge with BDAP
+    print(">> Merging ANAC Open Data and BDAP")
     columns_to_drop = ['Codice_Tipologia_MIUR', 'Codice_Tipologia_SIOPE', 'Denominazione', 'Descr_Tipologia_MIUR', 'Descr_Tipologia_SIOPE', 'CF']
     merged_data = merge_dataframes(df_filtered_1, df_pa_registry, 'cf_amministrazione_appaltante', 'CF', columns_to_drop)
     merged_data = merged_data.drop_duplicates()
@@ -269,14 +277,16 @@ def main():
 
     # Clean
     df_filtered_1_clean = clean_data(merged_data)
+    # Print
+    print_details(df_filtered_1, "Filtered ANAC Open Data with BDAP (1 - generic)")
 
     # Stats on dataframe
     dic_stat = {"region":"all", "size":len(df_filtered_1_clean)}
     list_stats.append(dic_stat)
 
     # Save
-    print(">> Saving data filtered (1 - generic)")
-    data_file_out = f"bando_cig_{year_start}-{year_end}_filtered.csv"
+    print(">> Saving data filtered with BDAP (1 - generic)")
+    data_file_out = f"bando_cig_{year_start}-{year_end}_filtered_bdap.csv"
     path_out = Path(data_dir) / data_file_out
     print("Path:", path_out)
     save_data(df_filtered_1_clean, path_out, csv_sep)

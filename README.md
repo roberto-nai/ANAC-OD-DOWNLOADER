@@ -4,7 +4,8 @@
 
 ## Goal
 The script downloads the Open Data from the ANAC website, unzips them, merges the ```cig_*.csv``` type data, filters them according to the parameters in the ```anac_od_select.json``` file, and finally extracts the data by region.
-Starting website: [https://dati.anticorruzione.it/opendata](https://dati.anticorruzione.it/opendata)
+Starting website: [https://dati.anticorruzione.it/opendata](https://dati.anticorruzione.it/opendata).  
+The script also downloads PA-related data from the websites of ISTAT and Open BDAP.  
 
 ### > Directories
 
@@ -34,19 +35,28 @@ Directory with utilities functions.
 #### ```01_anac_od_download.py```
 Application to download public notices (tenders) from the ANAC website and create a global dataset.
 
+#### ```01_istat_bdap_od_download.py```
+Application to download ISTAT and Open BDAP data. After downloading, move the CSV and XLSX files to ```OD_ISTAT_DIR``` and ```OD_BDAP_DIR```.
+
 #### ```02_anac_od_select.py```
 Application to select ANAC Open Data of interest from the global dataset. Filter the main data obtained from ```01_anac_od_download.py```.
 
-#### ```anac_od_select.json```
-List of filters according to ANAC nomenclature.
-
 #### ```anac_od_region.json```
 List of filters according to ANAC region names and convenience output name (generates one file per region).
+
+#### ```anac_od_select.json```
+List of filters according to ANAC nomenclature.
 
 #### ```anac_urls_dynamic.json```
 List of dynamic URLs (files) to download; source [https://dati.anticorruzione.it/opendata](https://dati.anticorruzione.it/opendata)
 
 #### ```anac_urls_static.json```
+List of static URLs (files) to download; source [https://dati.anticorruzione.it/opendata](https://dati.anticorruzione.it/opendata)
+
+#### ```bdap_urls_static.json```
+List of static URLs (files) to download; source [https://bdap-opendata.rgs.mef.gov.it](https://bdap-opendata.rgs.mef.gov.it)
+
+#### ```istat_urls_static.json```
 List of static URLs (files) to download; source [https://dati.anticorruzione.it/opendata](https://dati.anticorruzione.it/opendata)
 
 #### ``ssl_adapter.py``

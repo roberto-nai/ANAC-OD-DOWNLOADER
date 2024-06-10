@@ -1,20 +1,29 @@
 # config.yml
 
 # DOWNLOAD
-DOWNLOAD_DIR: download
+ANAC_DOWNLOAD_DIR: download_anac
+ISTAT_DOWNLOAD_DIR: download_istat
+BDAP_DOWNLOAD_DIR: download_bdap
 YEAR_START_DOWNLOAD: 2016    # starting year for downloading ANAC Open Data
 YEAR_END_DOWNLOAD: 2023      # ending year for downloading ANAC Open Data
-ANAC_STATIC_URLS_JSON: anac_urls_static.json # file with ANAC static URLs
-ANAC_DYNAMIC_URLS_JSON: anac_urls_dynamic.json # file with ANAC dynamic URLs
 CSV_SEP: ;
 
-# MERGING
+# ANAC
+ANAC_STATIC_URLS_JSON: anac_urls_static.json # file with ANAC static URLs
+ANAC_DYNAMIC_URLS_JSON: anac_urls_dynamic.json # file with ANAC dynamic URLs
+
+# ANAC csv MERGING
 CIG_PREFIX: cig_csv_ # Prefix of the files of "Bando CIG" to be merged
 
-# PA registry
-PA_REG_DIR: pa_registry
-PA_REG_FILE: Anagrafe-Enti_BDAP_2023-05-19.xlsx
-PA_REG_SCHEMA:
+# ISTAT
+OD_ISTAT_DIR: open_data_istat
+ISTAT_STATIC_URLS_JSON: istat_urls_static.json # file with ISTAT static URLs
+
+# Open BDAP
+OD_BDAP_DIR: open_data_bdap
+OD_BDAP_FILE: Anagrafe-Enti---Ente.csv
+BDAP_STATIC_URLS_JSON: bdap_urls_static.json # file with Oepn BDAP static URLs
+OD_BDAP__SCHEMA:
   CF: object
   Codice_Tipologia_MIUR: object
   Codice_Tipologia_SIOPE: object
@@ -23,9 +32,9 @@ PA_REG_SCHEMA:
   Descr_Tipologia_SIOPE: object
 
 # For filtering purposes
-DATA_DIR: data
-ANAC_OD_SELECT: anac_od_select.json # filter configuration
-ANAC_OD_REGION: anac_od_region.json # filter configuration
+OD_ANAC_DIR: open_data_anac
+ANAC_OD_SELECT: anac_od_select.json # filter configuration of ANAC data
+ANAC_OD_REGION: anac_od_region.json # filter configuration of ANAC data
 
 # STATS
 ANAC_STATS_DIR: stats
