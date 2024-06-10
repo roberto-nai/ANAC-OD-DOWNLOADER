@@ -1,11 +1,11 @@
 # 01_istat_od_download.py
 
 """
-Script name: 01_istat_od_download.py
+Script name: 01_istat_bdap_od_download.py
 Author: R. Nai
 Creation date: 10/01/2024
 Last modified: 01/03/2024 (added class SSLAdapter)
-Description: application to download data from ISTAT website
+Description: application to download data from ISTAT and Open BDAP website.
 """
 
 ### IMPORT ###
