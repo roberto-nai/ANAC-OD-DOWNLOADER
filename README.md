@@ -71,9 +71,9 @@ Downloads ISTAT and Open BDAP data related to Public Administrations.
 Filters and processes ANAC data downloaded by the first script.
 
 **Functionality:**
-- Filters data according to `anac_od_select.json`
+- Filters data according to *anac_od_select.json*
 - Performs a join with PA data from ANAC and Open BDAP
-- Generates regional files according to `anac_od_region.json`
+- Generates regional files according to *anac_od_region.json*
 
 ---
 
@@ -88,7 +88,7 @@ Main project parameters:
 - `ANAC_OTHER_DATASET_NAMES` - List of additional dataset names
 - Output folder paths
 
-### anac_urls_dynamic.json
+### *anac_urls_dynamic.json*
 Dynamic URLs with placeholders:
 - `{YYYY}` - Year (4 digits)
 - `{MM}` - Month (2 digits with leading zero)
@@ -103,19 +103,19 @@ Example:
 }
 ```
 
-### anac_urls_static.json
+### *anac_urls_static.json*
 Static URLs (files that do not change over time)
 
-### anac_od_select.json
+### *anac_od_select.json*
 Filters for selecting data of interest from ANAC
 
-### anac_od_region.json
+### *anac_od_region.json*
 Filters for generating separate CSV files by region
 
-### bdap_urls_static.json
+### *bdap_urls_static.json*
 URLs for downloading data from [https://openbdap.rgs.mef.gov.it](https://openbdap.rgs.mef.gov.it)
 
-### istat_urls_static.json
+### *istat_urls_static.json*
 URLs for downloading ISTAT data
 
 ---
@@ -157,7 +157,7 @@ The script 01_anac_od_download.py generates a log file with the same name:
 
 ## Citation
 
-If you use this project, please cite:
+If you use this project, please cite [https://www.nature.com/articles/s41597-024-04342-5](https://www.nature.com/articles/s41597-024-04342-5):
 
 ```bibtex
 @article{sd_Nai2024,
