@@ -5,12 +5,29 @@ ANAC_DOWNLOAD_DIR: download_anac
 ISTAT_DOWNLOAD_DIR: download_istat
 BDAP_DOWNLOAD_DIR: download_bdap
 YEAR_START_DOWNLOAD: 2016    # starting year for downloading ANAC Open Data
-YEAR_END_DOWNLOAD: 2023      # ending year for downloading ANAC Open Data
+YEAR_END_DOWNLOAD: 2025      # ending year for downloading ANAC Open Data (inclusive)
 CSV_SEP: ;
 
 # ANAC
 ANAC_STATIC_URLS_JSON: anac_urls_static.json # file with ANAC static URLs
 ANAC_DYNAMIC_URLS_JSON: anac_urls_dynamic.json # file with ANAC dynamic URLs
+ANAC_OTHER_DATASET_NAMES:
+  - aggiudicatari
+  - aggiudicazioni
+  - avvio-contratto
+  - categorie-dpcm-aggregazione
+  - categorie-opera
+  - collaudo
+  - fine-contratto
+  - lavorazioni
+  - partecipanti
+  - pubblicazioni
+  - quadro-economico
+  - sospensioni
+  - stati-avanzamento
+  - subappalti
+  - varianti
+
 
 # ANAC csv MERGING
 CIG_PREFIX: cig_csv_ # Prefix of the files of "Bando CIG" to be merged

@@ -30,11 +30,13 @@ class SSLAdapter(HTTPAdapter):
     def init_poolmanager(self, *args, **kwargs):
         """
         Initializes the pool manager for the adapter, creating a custom SSL context with the 
-        specified ciphers.
+        specified ciphers. Disables certificate verification for self-signed certificates.
 
         This method is called internally by `requests` when establishing a connection pool. 
         The custom SSL context created here is applied to all connections in the pool.
         """
         context = create_urllib3_context(ciphers='HIGH:!DH:!aNULL')
+        context.check_hostname = False
+        context.verify_mode = 0  # ssl.CERT_NONE
         kwargs['ssl_context'] = context
         return super(SSLAdapter, self).init_poolmanager(*args, **kwargs)

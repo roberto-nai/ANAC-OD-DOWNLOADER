@@ -1,8 +1,20 @@
+"""
+Utility functions for file handling, downloading, unzipping, and directory management.
+[2024-06-12]: added .gitkeep file to keep empty directories in git in check_and_create_directory.
+[2025-06-12]: updated with logging functionalities.
+[2025-06-20]: updated read_urls_from_json function with 'key' parameter to read specific sections of JSON files.
+"""
+
 import json
+import logging
 from pathlib import Path
 import requests
+import urllib3
 import zipfile
 from ssl_adapter import SSLAdapter
+
+# Disable SSL warnings for unverified HTTPS requests
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 def json_to_list_dict(json_file: str) -> list:
     """
@@ -24,22 +36,28 @@ def json_to_list_dict(json_file: str) -> list:
     
     return sorted_dictionaries
 
-def read_urls_from_json(json_file:str) -> list:
+def read_urls_from_json(json_file: str, key: str = None) -> list:
     """
     Reads a JSON file containing a list of URLs and returns the list.
+    If the JSON contains multiple sections, the desired section can be selected by key.
 
     Parameters:
-        json_file (str): The path to the JSON file containing the list of URLs.
+        json_file (str): The path to the JSON file containing the list of URLs or a dict of lists.
+        key (str, optional): The key of the section to read (e.g., "cig", "others").
 
     Returns:
-        list: A list of URLs read from the JSON file.
+        list: A list of URLs read from the JSON file or from the specified key.
     """
 
     list_url = []
 
     try:
         with open(json_file, 'r') as fp:
-            list_url = json.load(fp)
+            data = json.load(fp)
+            if isinstance(data, dict) and key is not None:
+                list_url = data.get(key, [])
+            else:
+                list_url = data
     except FileNotFoundError:
         print("Error: The file was not found.")
     except json.JSONDecodeError:
@@ -70,6 +88,9 @@ def check_and_create_directory(dir_name:str, dir_parent:str="") -> None:
         print(f"The directory '{path_directory}' already exists")
     else:
         path_directory.mkdir(parents=True, exist_ok=True)
+        gitkeep_path = path_directory / ".gitkeep"
+        if not gitkeep_path.exists():
+            gitkeep_path.touch()
         print(f"The directory '{path_directory}' has been created successfully")
 
 def url_download(list_urls:list, path_download:str) -> dict:
@@ -84,6 +105,7 @@ def url_download(list_urls:list, path_download:str) -> dict:
         dict: a dictionary with download results
     """
 
+    logger = logging.getLogger(__name__)
     dic_result = {"download_ok": 0, "download_not_necessary":0, "download_error":0}
 
     s = requests.Session()
@@ -100,6 +122,7 @@ def url_download(list_urls:list, path_download:str) -> dict:
         print(f"[{i} / {list_urls_len}]")
 
         print(f"URL to be downloaded: {url}")
+        logger.info(f"Connecting to URL [{i}/{list_urls_len}]: {url}")
         
         file_name_zip = Path(url).name
         print(f"File to be downloaded: {file_name_zip}")
@@ -109,13 +132,15 @@ def url_download(list_urls:list, path_download:str) -> dict:
         
         path_check = Path(path_download) / file_name_zip
         if path_check.exists():
-            print(f"WARNING! File '{file_name_zip}' already downloaded\n")
+            print(f"WARNING! File '{file_name_zip}' already downloaded, skipping download.")
+            logger.info(f"File already exists, skipping download: {file_name_zip}")
             dic_result["download_not_necessary"]+=1
             continue
         try:
             print("Downloading file...")
-            response = s.get(url)
+            response = s.get(url, verify=False)
             response.raise_for_status()  # Raises an HTTPError if the response was an error
+            logger.info(f"Download successful from: {url}")
             with open(Path(path_download) / file_name_zip, 'wb') as file:
                 file.write(response.content)
             # command = "wget -P " + "./" + path_download + " " + url
@@ -124,6 +149,7 @@ def url_download(list_urls:list, path_download:str) -> dict:
             dic_result["download_ok"]+=1
         except requests.RequestException as e:
             print(f"ERROR! Error downloading {url}: {e}\n")
+            logger.error(f"Error downloading from {url}: {e}")
             dic_result["download_error"]+=1
     return dic_result
 

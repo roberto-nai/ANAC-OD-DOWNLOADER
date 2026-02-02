@@ -1,3 +1,10 @@
-[
-    "https://dati.anticorruzione.it/opendata/download/dataset/cig-"
-]
+{
+    "cig": 
+    [
+        "https://dati.anticorruzione.it/opendata/download/dataset/cig-{YYYY}/filesystem/cig_csv_{YYYY}_{MM}.zip"
+    ],
+    "others": 
+    [
+        "https://dati.anticorruzione.it/opendata/download/dataset/{dataset-name}/filesystem/{YYYY}{MM}{DD}-{dataset-name}_csv.zip"
+    ]
+}

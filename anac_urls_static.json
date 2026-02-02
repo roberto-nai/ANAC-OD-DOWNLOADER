@@ -1,20 +1,22 @@
-[
-    "https://dati.anticorruzione.it/opendata/download/dataset/aggiudicatari/filesystem/aggiudicatari_csv.zip",
-    "https://dati.anticorruzione.it/opendata/download/dataset/aggiudicazioni/filesystem/aggiudicazioni_csv.zip",
-    "https://dati.anticorruzione.it/opendata/download/dataset/attestazioni-soa/filesystem/attestazioni-soa_csv.zip",
-    "https://dati.anticorruzione.it/opendata/download/dataset/avvio-contratto/filesystem/avvio-contratto_csv.zip",
-    "https://dati.anticorruzione.it/opendata/download/dataset/categorie-opera/filesystem/categorie-opera_csv.zip",
-    "https://dati.anticorruzione.it/opendata/download/dataset/centri-di-costo/filesystem/centri-di-costo_csv.zip",
-    "https://dati.anticorruzione.it/opendata/download/dataset/collaudo/filesystem/collaudo_csv.zip",
-    "https://dati.anticorruzione.it/opendata/download/dataset/fine-contratto/filesystem/fine-contratto_csv.zip",
-    "https://dati.anticorruzione.it/opendata/download/dataset/misurepremiali-pnrrpnc/filesystem/misurepremiali-pnrrpnc_csv.zip",
-    "https://dati.anticorruzione.it/opendata/download/dataset/bandi-cig-modalita-realizzazione/filesystem/bandi-cig-modalita-realizzazione_csv.zip",
-    "https://dati.anticorruzione.it/opendata/download/dataset/pubblicazioni/filesystem/pubblicazioni_csv.zip",
-    "https://dati.anticorruzione.it/opendata/download/dataset/quadro-economico/filesystem/quadro-economico_csv.zip",
-    "https://dati.anticorruzione.it/opendata/download/dataset/sospensioni/filesystem/sospensioni_csv.zip",
-    "https://dati.anticorruzione.it/opendata/download/dataset/stati-avanzamento/filesystem/stati-avanzamento_csv.zip",
-    "https://dati.anticorruzione.it/opendata/download/dataset/stazioni-appaltanti/filesystem/stazioni-appaltanti_csv.zip",
-    "https://dati.anticorruzione.it/opendata/download/dataset/subappalti/filesystem/subappalti_csv.zip",
-    "https://dati.anticorruzione.it/opendata/download/dataset/bandi-cig-tipo-scelta-contraente/filesystem/bandi-cig-tipo-scelta-contraente_csv.zip",
-    "https://dati.anticorruzione.it/opendata/download/dataset/varianti/filesystem/varianti_csv.zip"
-]
+{
+    "others": [
+        "https://dati.anticorruzione.it/opendata/download/dataset/aggiudicatari/filesystem/aggiudicatari_csv.zip",
+        "https://dati.anticorruzione.it/opendata/download/dataset/aggiudicazioni/filesystem/aggiudicazioni_csv.zip",
+        "https://dati.anticorruzione.it/opendata/download/dataset/attestazioni-soa/filesystem/attestazioni-soa_csv.zip",
+        "https://dati.anticorruzione.it/opendata/download/dataset/avvio-contratto/filesystem/avvio-contratto_csv.zip",
+        "https://dati.anticorruzione.it/opendata/download/dataset/categorie-opera/filesystem/categorie-opera_csv.zip",
+        "https://dati.anticorruzione.it/opendata/download/dataset/centri-di-costo/filesystem/centri-di-costo_csv.zip",
+        "https://dati.anticorruzione.it/opendata/download/dataset/collaudo/filesystem/collaudo_csv.zip",
+        "https://dati.anticorruzione.it/opendata/download/dataset/fine-contratto/filesystem/fine-contratto_csv.zip",
+        "https://dati.anticorruzione.it/opendata/download/dataset/misurepremiali-pnrrpnc/filesystem/misurepremiali-pnrrpnc_csv.zip",
+        "https://dati.anticorruzione.it/opendata/download/dataset/bandi-cig-modalita-realizzazione/filesystem/bandi-cig-modalita-realizzazione_csv.zip",
+        "https://dati.anticorruzione.it/opendata/download/dataset/pubblicazioni/filesystem/pubblicazioni_csv.zip",
+        "https://dati.anticorruzione.it/opendata/download/dataset/quadro-economico/filesystem/quadro-economico_csv.zip",
+        "https://dati.anticorruzione.it/opendata/download/dataset/sospensioni/filesystem/sospensioni_csv.zip",
+        "https://dati.anticorruzione.it/opendata/download/dataset/stati-avanzamento/filesystem/stati-avanzamento_csv.zip",
+        "https://dati.anticorruzione.it/opendata/download/dataset/stazioni-appaltanti/filesystem/stazioni-appaltanti_csv.zip",
+        "https://dati.anticorruzione.it/opendata/download/dataset/subappalti/filesystem/subappalti_csv.zip",
+        "https://dati.anticorruzione.it/opendata/download/dataset/bandi-cig-tipo-scelta-contraente/filesystem/bandi-cig-tipo-scelta-contraente_csv.zip",
+        "https://dati.anticorruzione.it/opendata/download/dataset/varianti/filesystem/varianti_csv.zip"
+    ]
+}
